@@ -19,7 +19,7 @@ app.use('/api',  require('./routes/api'));
 
 // error handling middleware
 app.use((err, req, res, next) => {
-  res.status(422).send({ error: err.message });
+  res.status(400).send({ error: err.message });
 });
 
 app.get('/', (req, res) => {

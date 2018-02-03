@@ -23,12 +23,23 @@ router.post('/ninjas', (req, res, next) => {
 
 // update a ninja in DB
 router.put('/ninjas/:id', (req, res, next) => {
-  res.send({ type: 'PUT'});
+  const id = req.params.id;
+  Ninja.findByIdAndUpdate(id, req.body).then(() => {
+
+    var ninja = Ninja.findById(id).then((ninja) => {
+      res.send({ninja: ninja})
+    }).catch(next);
+  }).catch(next);
 });
 
 // delete ninja from DB
 router.delete('/ninjas/:id', (req, res, next) => {
-  res.send({ type: 'DELETE'});
+  const id = req.params.id;
+  Ninja.findByIdAndRemove(id).then((ninja) => {
+    if (ninja) res.send({ninja: ninja});
+
+    throw Error("Ninja was not found in DB!");
+  }).catch(next);
 });
 
 module.exports = router;
