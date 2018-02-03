@@ -16,6 +16,12 @@ app.use(bodyParser.json());
 // setup routes
 app.use('/api',  require('./routes/api'));
 
+
+// error handling middleware
+app.use((err, req, res, next) => {
+  res.status(422).send({ error: err.message });
+});
+
 app.get('/', (req, res) => {
   res.send("Hello from api");
 });
